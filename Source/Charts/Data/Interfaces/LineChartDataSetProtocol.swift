@@ -61,8 +61,12 @@ public protocol LineChartDataSetProtocol: LineRadarChartDataSetProtocol
     /// `true` if drawing circles for this DataSet is enabled, `false` ifnot
     var isDrawCirclesEnabled: Bool { get }
     
-    /// The color of the inner circle (the circle-hole).
-    var circleHoleColor: NSUIColor? { get set }
+    /// - Returns: The color at the given index of the DataSet's circle hole color array.
+    /// Performs a IndexOutOfBounds check by modulus.
+    func getCircleHoleColor(atIndex: Int) -> NSUIColor?
+    
+    /// The colors of inner circles (the circle-hole).
+    var circleHoleColors: [NSUIColor] { get set }
     
     /// `true` if drawing circles for this DataSet is enabled, `false` ifnot
     var drawCircleHoleEnabled: Bool { get set }

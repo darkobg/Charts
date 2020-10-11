@@ -119,8 +119,22 @@ open class LineChartDataSet: LineRadarChartDataSet, LineChartDataSetProtocol
     /// `true` if drawing circles for this DataSet is enabled, `false` ifnot
     open var isDrawCirclesEnabled: Bool { return drawCirclesEnabled }
     
+    /// - Returns: The color at the given index of the DataSet's circle-color array.
+    /// Performs a IndexOutOfBounds check by modulus.
+    open func getCircleHoleColor(atIndex index: Int) -> NSUIColor?
+    {
+        let size = circleHoleColors.count
+        guard size > 0 else { return nil }
+        let index = index % size
+        if index >= size
+        {
+            return nil
+        }
+        return circleHoleColors[index]
+    }
+    
     /// The color of the inner circle (the circle-hole).
-    open var circleHoleColor: NSUIColor? = NSUIColor.white
+    open var circleHoleColors = [NSUIColor]()
     
     /// `true` if drawing circles for this DataSet is enabled, `false` ifnot
     open var drawCircleHoleEnabled = true
@@ -161,7 +175,7 @@ open class LineChartDataSet: LineRadarChartDataSet, LineChartDataSetProtocol
     {
         let copy = super.copy(with: zone) as! LineChartDataSet
         copy.circleColors = circleColors
-        copy.circleHoleColor = circleHoleColor
+        copy.circleHoleColors = circleHoleColors
         copy.circleRadius = circleRadius
         copy.circleHoleRadius = circleHoleRadius
         copy.cubicIntensity = cubicIntensity
